@@ -1,0 +1,33 @@
+---
+title: "Assignment 1"
+author: "Ruixuan Ma"
+date: "11/8/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+wcgs_df <- read.csv("/Users/maruixuan/Documents/Documents/GitHub/BST650_Bootstrap/wcgs.csv", header = TRUE, stringsAsFactors = FALSE)
+
+plot(
+  x = wcgs_df$dbp,
+  y = wcgs_df$sbp,
+  xlab = "Diastolic Blood Pressure (mmHg)",
+  ylab = "Systolic Blood Pressure (mmHg)"
+)
+
+lm(sbp ~ dbp, data = wcgs_df)
+
+Estimates <- function(x, y){
+  Sxy <- sum(x*y) - length(x)*mean(x)*mean(y)
+  Sxx <- sum(x^2) - length(x)*(mean(x))^2
+  
+  beta1 <- Sxy/Sxx
+  beta0 <- mean(y) - beta1 * mean(x)
+  
+}
+
+```
