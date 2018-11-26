@@ -1,0 +1,41 @@
+---
+title: "Assignment 2"
+author: "Ruixuan Ma"
+date: "11/25/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+wcgs_df <- read.csv(
+  file = "/Users/maruixuan/Documents/Documents/GitHub/BST650_Bootstrap/wcgs.csv",
+  header = TRUE, stringsAsFactors = FALSE
+)
+
+lm(formula = chol ~ age + weight + sbp, data = wcgs_df)
+
+
+EstBeta <- function(x, y) {
+  x <-
+  wcgs_df %>% 
+  select(chol, age, weight, sbp) %>% 
+  na.omit() %>% 
+  as.matrix()
+  
+  X <- x[, c("age", "weight", "sbp")]
+  interceptCol <- matrix(1, nrow = nrow(X))
+  X <- cbind(interceptCol, X)
+  colnames(X) <- c("(Intercept)", "age", "weight", "sbp")
+  
+  XT <- t(X)
+  XTX <- XT %*% X
+  inv_XTX <- solve(XTX)
+  
+  y <- x[, c("chol")]
+  
+  estBeta <- inv_XTX %*% XT %*% y
+}
+```
